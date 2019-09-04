@@ -6,3 +6,4 @@ Christie Bahlai
 Julia Perrone
 Cheyan Pace
 Bill Simco
+Lucy Dyer
