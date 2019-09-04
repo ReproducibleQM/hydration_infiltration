@@ -7,3 +7,4 @@ Julia Perrone
 Cheyan Pace
 Bill Simco
 Lucy Dyer
+Katie Manning
