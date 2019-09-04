@@ -5,3 +5,4 @@ Team members:
 Christie Bahlai
 Julia Perrone
 Cheyan Pace
+Bill Simco
