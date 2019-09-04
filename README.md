@@ -8,6 +8,7 @@ Cheyan Pace
 Bill Simco
 Lucy Dyer
 Katie Manning
+Zia Ul Hassan
 
 Christian Bullion
 
