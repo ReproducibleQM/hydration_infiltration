@@ -12,3 +12,5 @@ Team members:
 * Christian Bullion
 * Lama Tawk
 * Anne Jefferson
+
+Notes can be found at [this etherpad](https://etherpad.net/p/rqm_19)
