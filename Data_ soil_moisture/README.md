@@ -1,11 +1,3 @@
-tHIS IS WHERE WE PUT OUR DATA README
-
-https://portal.lternet.edu/nis/mapbrowse?packageid=knb-lter-knz.29.12
-
-
-RQM Meta-data Exercise: Lesson 3
-
-
 | What |
 Description (abstract): 
 What is your project about?
