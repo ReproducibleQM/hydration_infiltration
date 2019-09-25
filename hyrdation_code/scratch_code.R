@@ -5,6 +5,7 @@ a<-12
 b<-13
 c<-14
 
+#let's create a function to demonstrate functions
 domath<-function(data1, data2, data3){
   result<-data1+data2/data3
   return(result)
