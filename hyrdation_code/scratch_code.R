@@ -36,4 +36,3 @@ for (i in 1:length(vec)){
   print(out)
 }
 
-#test pull,commit,pull
