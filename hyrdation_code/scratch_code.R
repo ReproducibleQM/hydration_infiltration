@@ -15,7 +15,7 @@ domath<-function(data1, data2, data3){
 domath(a,b,c)
 domath(b,c,a)
 
-
+#Create a conditional function
 condfunction<-function(data){
   if (data>13){
     message<-"It's warm enough"
