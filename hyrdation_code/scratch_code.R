@@ -29,6 +29,7 @@ condfunction<-function(data){
 vec<-c(a,b,c)
 vec
 
+#print the vector
 for (i in 1:length(vec)){
   out<-condfunction(vec[i])
   print (vec[i])
