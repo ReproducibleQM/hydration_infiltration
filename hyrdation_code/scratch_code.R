@@ -35,3 +35,5 @@ for (i in 1:length(vec)){
   print (vec[i])
   print(out)
 }
+
+#test pull,commit,pull
