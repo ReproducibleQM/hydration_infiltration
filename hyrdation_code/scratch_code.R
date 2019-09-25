@@ -11,6 +11,7 @@ domath<-function(data1, data2, data3){
   return(result)
 }
 
+#testing the domath function
 domath(a,b,c)
 domath(b,c,a)
 
