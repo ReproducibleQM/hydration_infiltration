@@ -25,7 +25,7 @@ condfunction<-function(data){
   return(message)
 }
 
-
+#Creating a vector out of previously defined objects
 vec<-c(a,b,c)
 vec
 
