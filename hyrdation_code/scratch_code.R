@@ -1,5 +1,6 @@
 #This is our very first script file
 
+#let's create some objects we can do operations on
 a<-12
 b<-13
 c<-14
