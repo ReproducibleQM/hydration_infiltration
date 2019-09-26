@@ -33,3 +33,12 @@ incline<-rep("flat", length(data1$Observation))
 rip_status<-rep("pre", length(data1$Observation))
 
 data2<-cbind(data1,incline, rip_status)
+
+#now we need to melt the data to get it in long form
+library(reshape2)
+
+data3<-melt(data2, id=c("Observation", "Date_time", "incline", "rip_status"))
+
+names(data3)[names(data3) == "variable"] <- "sensor_depth"
+names(data3)[names(data3) == "value"] <- "water_content"
+
