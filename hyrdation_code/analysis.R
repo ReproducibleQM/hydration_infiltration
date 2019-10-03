@@ -72,6 +72,7 @@ pre_slope3<-melt(pre_slope2, id=c("Observation", "Date_time", "incline", "rip_st
 names(pre_slope3)[names(pre_slope3) == "variable"] <- "sensor_depth"
 names(pre_slope3)[names(pre_slope3) == "value"] <- "water_content"
 
+<<<<<<< HEAD
 
 
 #rename sensor_depth so that we also have a continuous variable representing this
@@ -87,3 +88,5 @@ prerip<-rbind(data3, pre_slope3)
 
 summary(prerip)
 
+=======
+>>>>>>> 1eba29401e3893c381ab5e59497c2e3efaf58deb
