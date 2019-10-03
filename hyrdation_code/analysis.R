@@ -86,4 +86,21 @@ prerip<-rbind(data3, pre_slope3)
 
 summary(prerip)
 
+#Load the 3rd dataset (SnowFlat)
+post_flat <- read.csv(file="https://raw.githubusercontent.com/ReproducibleQM/hydration_infiltration/master/Data_ soil_moisture/20190524-snowflat-20386723.csv", header = T, skip = 1)
+
+names(post_flat)<-c("Observation","Date_time", "Water_crossrip", "Water_norip")
+
+incline<-rep("flat", length(post_flat$Observation))
+rip_status<-rep("post", length(post_flat$Observation))
+
+post_flat_2<-cbind(post_flat,incline, rip_status)
+
+#now we need to melt the data to get it in long form
+library(reshape2)
+
+post_flat_3<-melt(post_flat_2, id=c("Observation", "Date_time", "incline", "rip_status"))
+
+names(post_flat_3)[names(post_flat_2) == "variable"] <- "sensor_depth"
+names(post_flat_3)[names(post_flat_2) == "value"] <- "water_content"
 
