@@ -45,6 +45,14 @@ data3<-melt(data2, id=c("Observation", "Date_time", "incline", "rip_status"))
 names(data3)[names(data3) == "variable"] <- "sensor_depth"
 names(data3)[names(data3) == "value"] <- "water_content"
 
+#rename sensor_depth so that we also have a continuous variable representing this
+
+names(data3)[names(data3) == "sensor_depth"]<-"sensor"
+
+#adding value for sensor depth
+data3$sensor_depth<-ifelse(data3$sensor=="Water_top", 20,48)
+
+
 #next, pre-rip, slope data
 pre_slope1<-read.csv(file="https://raw.githubusercontent.com/ReproducibleQM/hydration_infiltration/master/Data_%20soil_moisture/20180713_SLOPE_20386722.csv", 
                 header=T, skip=1)
@@ -64,7 +72,18 @@ pre_slope3<-melt(pre_slope2, id=c("Observation", "Date_time", "incline", "rip_st
 names(pre_slope3)[names(pre_slope3) == "variable"] <- "sensor_depth"
 names(pre_slope3)[names(pre_slope3) == "value"] <- "water_content"
 
+
+
+#rename sensor_depth so that we also have a continuous variable representing this
+
+names(pre_slope3)[names(pre_slope3) == "sensor_depth"]<-"sensor"
+
+#adding value for sensor depth
+pre_slope3$sensor_depth<-ifelse(pre_slope3$sensor=="Water_top", 20,50)
+
+
 #now we need to bring our data frames together
 prerip<-rbind(data3, pre_slope3)
 
 summary(prerip)
+
