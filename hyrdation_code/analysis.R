@@ -58,26 +58,9 @@ incline<-rep("slope", length(pre_slope1$Observation))
 rip_status<-rep("pre", length(pre_slope1$Observation))
 pre_slope2<-cbind(pre_slope1,incline, rip_status)
 
-#now we need to melt the data to get it in long form
-library(reshape2)
-
 pre_slope3<-melt(pre_slope2, id=c("Observation", "Date_time", "incline", "rip_status"))
 
 #change column names
 names(pre_slope3)[names(pre_slope3) == "variable"] <- "sensor_depth"
 names(pre_slope3)[names(pre_slope3) == "value"] <- "water_content"
-
-#change column names
-names(pre_slope3)[names(pre_slope3) == "sensor_depth"] <- "sensor"
-
-#adding value for sensor depth
-depth<- if ("sensor"== "Water_top") {
-  20
-} else {
-    48
-  }
-
-#insert column between sensor and water_content
-library(tibble)
-add_column(pre_slope3, sensor_depth=depth, .after = 5)
 
