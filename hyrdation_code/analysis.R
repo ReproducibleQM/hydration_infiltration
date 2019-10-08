@@ -101,8 +101,8 @@ library(reshape2)
 
 post_flat_3<-melt(post_flat_2, id=c("Observation", "Date_time", "incline", "rip_status"))
 
-names(post_flat_3)[names(post_flat_2) == "variable"] <- "sensor_depth"
-names(post_flat_3)[names(post_flat_2) == "value"] <- "water_content"
+names(post_flat_3)[names(post_flat_3) == "variable"] <- "sensor_depth"
+names(post_flat_3)[names(post_flat_3) == "value"] <- "water_content"
 
 #rename sensor_depth so that we also have a continuous variable representing this
 
