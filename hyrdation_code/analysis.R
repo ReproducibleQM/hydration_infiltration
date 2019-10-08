@@ -132,3 +132,35 @@ names(postslope_oct3)[names(postslope_oct3) == "value"] <- "water_content"
 postslope_oct3$sensor_depth<-ifelse(postslope_oct3$sensor=="Water_crossrip",
                                     10,10)#all sensors at 10 cm
 
+#first attempt at pulling in SN20386722 - cross rip, EW, and NS rips
+
+post_Cross_EWNS<-read.csv(file="https://raw.githubusercontent.com/ReproducibleQM/hydration_infiltration/master/Data_%20soil_moisture/20190628_SnowvilleSlope_20386722_.csv",
+                          header=T, skip=1)
+
+#changing column names
+names(post_Cross_EWNS)<-c("Observation","Date_Time","Cross_Rip","EW_Rip","NS_Rip")
+
+summary(post_Cross_EWNS)
+
+#so far so good, now adding incline and rip status
+incline<-rep("slope", length(post_Cross_EWNS$Observation))
+rip_status<-rep("post", length(post_Cross_EWNS$Observation))
+
+#binding
+post_cross_EWNS2<-cbind(post_Cross_EWNS,incline,rip_status)
+
+#now melting the data to get it in long form
+library(reshape2)
+
+post_cross_EWNS3<-melt(post_cross_EWNS2, id=c("Observation", "Date_Time", "incline", "rip_status"))
+
+summary(post_cross_EWNS3)
+
+#still looks good - now I'll change the column names
+names(post_cross_EWNS3)[names(post_cross_EWNS3) == "variable"]<-"sensor"
+names(post_cross_EWNS3)[names(post_cross_EWNS3) == "value"]<-"water_content"
+
+#now I have to add a sensor depth column and give it values
+post_cross_EWNS3$sensor_depth<-ifelse(post_cross_EWNS3$sensor=="Cross_Rip", 10,10)
+
+#I realized later that every sensor depth for this data set is 10
