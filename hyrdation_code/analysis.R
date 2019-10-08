@@ -104,3 +104,25 @@ post_flat_3<-melt(post_flat_2, id=c("Observation", "Date_time", "incline", "rip_
 names(post_flat_3)[names(post_flat_2) == "variable"] <- "sensor_depth"
 names(post_flat_3)[names(post_flat_2) == "value"] <- "water_content"
 
+
+#input snowslope dataset
+postslope_oct <- read.csv(file="https://raw.githubusercontent.com/ReproducibleQM/hydration_infiltration/master/Data_%20soil_moisture/20190524-snowslope-20386722.csv", 
+                          header = T, skip = 1)
+
+names(postslope_oct)<-c("Observation","Date_time", "Water_crossrip", "Water_EWrip", "Water_NSrip")
+incline<-rep("slope", length(postslope_oct$Observation))
+rip_status<-rep("post", length(postslope_oct$Observation))
+                      
+postslope_oct2<-cbind(postslope_oct,incline, rip_status)
+                      
+#now we need to melt the data to get it in long form
+library(reshape2)
+                      
+postslope_oct3<-melt(postslope_oct2, id=c("Observation", "Date_time", "incline", "rip_status"))
+
+#these lines don't work
+names(postslope_oct3)[names(postslope_oct2) == "variable"] <- "sensor_location"
+names(postslope_oct3)[names(postslope_oct2) == "value"] <- "water_content"
+#adding value for sensor depth
+pre_slope3$sensor_depth<-ifelse(pre_slope3$sensor=="Water_top", 20,50)
+
