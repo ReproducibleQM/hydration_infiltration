@@ -162,3 +162,30 @@ names(post_cross_EWNS3)[names(post_cross_EWNS3) == "value"]<-"water_content"
 post_cross_EWNS3$sensor_depth<-ifelse(post_cross_EWNS3$sensor=="Cross_Rip", 10,10)
 
 #I realized later that every sensor depth for this data set is 10
+
+
+### SNOWVILLE FLAT
+svflat1<-read.csv(file="https://raw.githubusercontent.com/ReproducibleQM/hydration_infiltration/master/Data_%20soil_moisture/20190628_SnowvilleFlat_20386723.csv", 
+                  header=T, skip=1)
+summary(svflat1)
+
+#change column names
+names(svflat1)<-c("Observation","Date_time", "Water_top", "Water_bottom")
+
+#add incline and rip status variables
+incline<-rep("flat", length(svflat1$Observation))
+rip_status<-rep("pre", length(svflat1$Observation))
+svflat2<-cbind(svflat1,incline, rip_status)
+
+#now we need to melt the data to get it in long form
+svflat3<-melt(svflat2, id=c("Observation", "Date_time", "incline", "rip_status"))
+
+#change column names
+names(svflat3)[names(svflat3) == "variable"] <- "sensor_depth"
+names(svflat3)[names(svflat3) == "value"] <- "water_content"
+
+#rename sensor_depth so that we also have a continuous variable representing this
+names(svflat3)[names(svflat3) == "sensor_depth"]<-"sensor"
+
+#adding value for sensor depth
+svflat3$sensor_depth<-ifelse(svflat3$sensor=="Water_top", 20,48)
