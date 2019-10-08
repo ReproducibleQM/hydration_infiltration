@@ -149,8 +149,6 @@ rip_status<-rep("post", length(post_Cross_EWNS$Observation))
 #binding
 post_cross_EWNS2<-cbind(post_Cross_EWNS,incline,rip_status)
 
-#now melting the data to get it in long form
-library(reshape2)
 
 post_cross_EWNS3<-melt(post_cross_EWNS2, id=c("Observation", "Date_Time", "incline", "rip_status"))
 
