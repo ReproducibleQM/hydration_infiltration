@@ -38,7 +38,7 @@ pre_flat_june2<-cbind(pre_flat_june1,incline, rip_status)
 #now we need to melt the data to get it in long form
 library(reshape2)
 
-pre_flat_june<-melt(pre_flat_june2, id=c("Observation", "Date_time", "incline", "rip_status"))
+pre_flat_june3<-melt(pre_flat_june2, id=c("Observation", "Date_time", "incline", "rip_status"))
 
 #change column names
 names(pre_flat_june3)[names(pre_flat_june3) == "variable"] <- "sensor_depth"
