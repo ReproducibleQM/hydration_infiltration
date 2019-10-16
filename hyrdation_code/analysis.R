@@ -21,64 +21,35 @@
 # SN: 20385905 10 cm, EW rip
 # SN: 20469555 10 cm, NS rip
 
-#start with pre-rip, flat data
-data1<-read.csv(file="https://raw.githubusercontent.com/ReproducibleQM/hydration_infiltration/master/Data_%20soil_moisture/20180713_FLAT_20386723.csv", 
-                header=T, skip=1)
+pre_flat_june1<-read.csv(file="https://raw.githubusercontent.com/ReproducibleQM/hydration_infiltration/master/Data_%20soil_moisture/20180713_FLAT_20386723.csv",
+                         header=T, skip=1)
 
-summary(data1)
+summary(pre_flat_june1)
 
 #change column names
-names(data1)<-c("Observation","Date_time", "Water_top", "Water_bottom")
+names(pre_flat_june1)<-c("Observation","Date_time", "Water_top", "Water_bottom")
 
 #add incline and rip status variables
-incline<-rep("flat", length(data1$Observation))
-rip_status<-rep("pre", length(data1$Observation))
+incline<-rep("flat", length(pre_flat_june1$Observation))
+rip_status<-rep("pre", length(pre_flat_june1$Observation))
 
-data2<-cbind(data1,incline, rip_status)
+pre_flat_june2<-cbind(pre_flat_june1,incline, rip_status)
 
 #now we need to melt the data to get it in long form
 library(reshape2)
 
-data3<-melt(data2, id=c("Observation", "Date_time", "incline", "rip_status"))
+pre_flat_june<-melt(pre_flat_june2, id=c("Observation", "Date_time", "incline", "rip_status"))
 
 #change column names
-names(data3)[names(data3) == "variable"] <- "sensor_depth"
-names(data3)[names(data3) == "value"] <- "water_content"
+names(pre_flat_june3)[names(pre_flat_june3) == "variable"] <- "sensor_depth"
+names(pre_flat_june3)[names(pre_flat_june3) == "value"] <- "water_content"
 
 #rename sensor_depth so that we also have a continuous variable representing this
 
-names(data3)[names(data3) == "sensor_depth"]<-"sensor"
+names(pre_flat_june3)[names(pre_flat_june3) == "sensor_depth"]<-"sensor"
 
 #adding value for sensor depth
-data3$sensor_depth<-ifelse(data3$sensor=="Water_top", 20,48)
-
-
-#next, pre-rip, slope data
-pre_slope1<-read.csv(file="https://raw.githubusercontent.com/ReproducibleQM/hydration_infiltration/master/Data_%20soil_moisture/20180713_SLOPE_20386722.csv", 
-                header=T, skip=1)
-summary(pre_slope1)
-
-#change column names
-names(pre_slope1)<-c("Observation","Date_time", "Water_top", "Water_bottom")
-
-#add incline and rip status variables
-incline<-rep("slope", length(pre_slope1$Observation))
-rip_status<-rep("pre", length(pre_slope1$Observation))
-pre_slope2<-cbind(pre_slope1,incline, rip_status)
-
-pre_slope3<-melt(pre_slope2, id=c("Observation", "Date_time", "incline", "rip_status"))
-
-#change column names
-names(pre_slope3)[names(pre_slope3) == "variable"] <- "sensor_depth"
-names(pre_slope3)[names(pre_slope3) == "value"] <- "water_content"
-
-
-#rename sensor_depth so that we also have a continuous variable representing this
-
-names(pre_slope3)[names(pre_slope3) == "sensor_depth"]<-"sensor"
-
-#adding value for sensor depth
-pre_slope3$sensor_depth<-ifelse(pre_slope3$sensor=="Water_top", 20,50)
+pre_flat_june3$sensor_depth<-ifelse(pre_flat_june3$sensor=="Water_top", 20,48)
 
 
 #now we need to bring our data frames together
