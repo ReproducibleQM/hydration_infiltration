@@ -148,3 +148,40 @@ postrip<-rbind(post_flat3, post_slope3)
 #bring all the data together
 
 allrips<-rbind(prerip,postrip)
+
+
+
+################################################################
+
+#bring in the weather data
+
+#onset is doing terrible things to me again
+
+#get a list of file names:
+
+setwd("../Data_weather_station/")
+file_list<-list.files()
+namelist<-c('obs', 'date_time', 'pressure', 'wind_speed', 'gust_speed',
+            'sol_rad', 'wind_dir', 'rain', 'temperature', 'rh', 'dew_point',
+            'temperature2')
+
+
+library(tidyverse)
+#create an empty data frame to put stuff in
+dataset<-data.frame(matrix(vector(), 0, 12,
+                           dimnames=list(c(), c(namelist))),
+                    stringsAsFactors=F)
+
+#loop through the files, merge 'em together
+for (i in 1:length(file_list)){
+  data<-read.csv(file=file_list[i], header=T) #read data in as a csv
+  #now use varnames to rename columns
+  names(data)<-namelist
+  #because sometimes there is a comma thousands separator in pressure and sol_rad
+  data$pressure<-as.numeric(gsub(",", "", data$pressure))
+  data$sol_rad<-as.numeric(gsub(",", "", data$sol_rad))
+  dataset<-bind_rows(dataset, data)
+  
+}
+summary(dataset)
+
