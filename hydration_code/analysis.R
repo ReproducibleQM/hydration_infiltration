@@ -149,6 +149,11 @@ postrip<-rbind(post_flat3, post_slope3)
 
 allrips<-rbind(prerip,postrip)
 
+library(plyr)
+
+averages<-ddply(allrips, c("incline", "rip_status","sensor_depth"), summarize,
+                average=mean(water_content), sd=sd(water_content),
+                max=max(water_content))
 
 
 ################################################################
