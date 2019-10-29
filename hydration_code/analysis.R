@@ -168,7 +168,7 @@ namelist<-c('obs', 'date_time', 'pressure', 'wind_speed', 'gust_speed',
 
 library(tidyverse)
 #create an empty data frame to put stuff in
-dataset<-data.frame(matrix(vector(), 0, 12,
+weather<-data.frame(matrix(vector(), 0, 12,
                            dimnames=list(c(), c(namelist))),
                     stringsAsFactors=F)
 
@@ -180,8 +180,8 @@ for (i in 1:length(file_list)){
   #because sometimes there is a comma thousands separator in pressure and sol_rad
   data$pressure<-as.numeric(gsub(",", "", data$pressure))
   data$sol_rad<-as.numeric(gsub(",", "", data$sol_rad))
-  dataset<-bind_rows(dataset, data)
+  weather<-bind_rows(weather, data)
   
 }
-summary(dataset)
+summary(weather)
 
