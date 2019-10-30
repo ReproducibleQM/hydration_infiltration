@@ -151,7 +151,7 @@ allrips<-rbind(prerip,postrip)
 
 library(lubridate)
 str(allrips$Date_time)
-allrips$new_date<-mdy_hms(allrips$Date_time)
+allrips$new_date<-mdy_hms(allrips$Date_time, tz="UTC")-hours(4)
 
 allrips$year<-year(allrips$new_date)
 allrips$doy<-yday(allrips$new_date)
@@ -197,3 +197,9 @@ for (i in 1:length(file_list)){
 }
 summary(weather)
 
+str(weather$date_time)
+
+weather$new_date<-mdy_hms(weather$date_time)
+
+weather$year<-year(weather$new_date)
+weather$doy<-yday(weather$new_date)
