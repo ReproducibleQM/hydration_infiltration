@@ -149,6 +149,13 @@ postrip<-rbind(post_flat3, post_slope3)
 
 allrips<-rbind(prerip,postrip)
 
+library(lubridate)
+str(allrips$Date_time)
+allrips$new_date<-mdy_hms(allrips$Date_time)
+
+allrips$year<-year(allrips$new_date)
+allrips$doy<-yday(allrips$new_date)
+
 library(plyr)
 
 averages<-ddply(allrips, c("incline", "rip_status","sensor_depth"), summarize,
