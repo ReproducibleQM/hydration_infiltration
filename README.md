@@ -13,6 +13,4 @@ Team members:
 * Lama Tawk
 * Anne Jefferson
 
-Notes can be found at [this etherpad](https://etherpad.net/p/rqm_19)
-
-Official Document can be found at [this Google Doc](https://docs.google.com/document/d/1fzBzM4H66bM12cOBGLpXuWYMzQkx-ZVLAsl4w9tycSM/edit)
+Official Document and unoffical notes can be found at [this Google Doc](https://docs.google.com/document/d/1fzBzM4H66bM12cOBGLpXuWYMzQkx-ZVLAsl4w9tycSM/edit)
