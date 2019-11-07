@@ -151,16 +151,24 @@ allrips<-rbind(prerip,postrip)
 
 library(lubridate)
 str(allrips$Date_time)
-allrips$new_date<-mdy_hms(allrips$Date_time, tz="UTC")-hours(4)
+allrips$new_date<-mdy_hms(allrips$Date_time, tz="UTC")+hours(4)
 
 allrips$year<-year(allrips$new_date)
 allrips$doy<-yday(allrips$new_date)
 
+
+# let's look at these data!
 library(plyr)
+library(ggplot2)
 
 averages<-ddply(allrips, c("incline", "rip_status","sensor_depth"), summarize,
                 average=mean(water_content), sd=sd(water_content),
                 max=max(water_content))
+
+plot1<-ggplot(allrips, aes(x=rip_status, y=water_content, fill=incline))+
+  geom_boxplot()
+
+plot1
 
 
 ################################################################
