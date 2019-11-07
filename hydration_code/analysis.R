@@ -165,10 +165,10 @@ averages<-ddply(allrips, c("incline", "rip_status","sensor_depth"), summarize,
                 average=mean(water_content), sd=sd(water_content),
                 max=max(water_content))
 
-plot1<-ggplot(allrips, aes(x=rip_status, y=water_content, fill=incline))+
+plot1<-ggplot(allrips, aes(x=incline, y=water_content, fill=sensor))+
   geom_boxplot()+
-  theme_classic()+
-  scale_fill_brewer(palette="Blues")
+  theme_bw()+
+  scale_fill_brewer(palette="Set3")
 
 plot1
 
