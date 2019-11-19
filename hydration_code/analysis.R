@@ -155,7 +155,8 @@ allrips$new_date<-mdy_hms(allrips$Date_time, tz="UTC")+hours(4)
 
 allrips$year<-year(allrips$new_date)
 allrips$doy<-yday(allrips$new_date)
-
+allrips$hour<-hour(allrips$new_date)
+allrips$minute<-minute(allrips$new_date)
 
 # let's look at these data!
 library(plyr)
@@ -213,3 +214,15 @@ weather$new_date<-mdy_hms(weather$date_time)
 
 weather$year<-year(weather$new_date)
 weather$doy<-yday(weather$new_date)
+weather$hour<-hour(weather$new_date)
+weather$minute<-minute(weather$new_date)
+
+summary(as.factor(weather$minute))
+
+weather$minute_interval<-ifelse(weather$minute>0 & weather$minute<=15, 15,
+                                ifelse(weather$minute>15&weather$minute<=30, 30,
+                                       ifelse(weather$minute>30&weather$minute<=45, 45, 0)))
+
+weather15<-ddply(weather, c("year", "doy","hour"), summarize,
+                average=mean(water_content), sd=sd(water_content),
+                max=max(water_content))
