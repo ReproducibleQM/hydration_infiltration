@@ -219,10 +219,32 @@ weather$minute<-minute(weather$new_date)
 
 summary(as.factor(weather$minute))
 
-weather$minute_interval<-ifelse(weather$minute>0 & weather$minute<=15, 15,
-                                ifelse(weather$minute>15&weather$minute<=30, 30,
-                                       ifelse(weather$minute>30&weather$minute<=45, 45, 0)))
+#because the weather data is taken at 5 minute intervals
+#and soil moisture is taken at 15, we need to convert
+#the weather data to 15 min intervals. to do this we
+#assign the minute groupings of the weather data to the 15 minute interval before the
+#soil data was taken, and then we summarize the data based on these
+#interval assignments
+weather$minute_interval<-ifelse(weather$minute<15, 15,
+                                ifelse(weather$minute>=15&weather$minute<30, 30,
+                                       ifelse(weather$minute>=30&weather$minute<45, 45, 0)))
+#get rid of second temperature channel that isn't working
+weather$temperature2<-NULL
 
-weather15<-ddply(weather, c("year", "doy","hour"), summarize,
-                average=mean(water_content), sd=sd(water_content),
-                max=max(water_content))
+#get rid of dewpoint because it's more error prone than other measures
+weather$dew_point<-NULL
+
+#now let's look at the data to make sure R sees it correctly
+summary(weather)
+
+#let's get rid of data with NAs
+
+weather1<-na.omit(weather)
+
+weather15<-ddply(weather1, c("year", "doy","hour", "minute_interval"), summarize,
+                 pressure=mean(pressure),
+                 wind_speed=mean(wind_speed),
+                 sol_rad=mean(sol_rad),
+                 rain=sum(rain),
+                 temperature=mean(temperature),
+                 rh=mean(rh))
