@@ -248,3 +248,22 @@ weather15<-ddply(weather1, c("year", "doy","hour", "minute_interval"), summarize
                  rain=sum(rain),
                  temperature=mean(temperature),
                  rh=mean(rh))
+
+accum.precip<-function (rain, doy){
+  precip.acc<-c()
+  counter<-doy[1]
+  accumulation<-0
+  for (i in 1:length(rain)){
+    if(doy[i]==counter){
+      accumulation<-accumulation + rain[i]
+    }else{
+      counter<-doy[i]
+      accumulation<-rain[i]
+    }
+    precip.acc<-c(precip.acc, accumulation)
+  }
+  return(precip.acc)
+}
+
+#run the precipitation accumulation function
+weather15$prec.accum<-accum.precip(weather15$rain, weather15$doy)
