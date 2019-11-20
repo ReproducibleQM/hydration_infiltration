@@ -249,21 +249,57 @@ weather15<-ddply(weather1, c("year", "doy","hour", "minute_interval"), summarize
                  temperature=mean(temperature),
                  rh=mean(rh))
 
-accum.precip<-function (rain, doy){
-  precip.acc<-c()
-  counter<-doy[1]
-  accumulation<-0
-  for (i in 1:length(rain)){
-    if(doy[i]==counter){
-      accumulation<-accumulation + rain[i]
+# create a precipitation accumulation function so we can calculate accumulated rain
+accum.precip<-function (rain, time_period){
+  precip.acc<-c()#create an empty vector to put our result in
+  counter<-time_period[1]#counter starts at first entry of our time vector
+  accumulation<-0 #at time 0, we have zero accumulation
+  for (i in 1:length(rain)){#for each unit of the rain vector
+    if(time_period[i]==counter){#if we're in the same unit of time as we've got in the counter
+      accumulation<-accumulation + rain[i] #add rain from that vector unit
     }else{
-      counter<-doy[i]
-      accumulation<-rain[i]
+      counter<-time_period[i] #reset counter
+      accumulation<-rain[i] #start the accumulation again
     }
     precip.acc<-c(precip.acc, accumulation)
   }
   return(precip.acc)
 }
 
+
+
 #run the precipitation accumulation function
 weather15$prec.accum<-accum.precip(weather15$rain, weather15$doy)
+
+plot(weather15$hour, weather15$prec.accum)
+
+
+#let's count how often it was raining
+rainy.days<-function (precip, threshold){
+  rainy.days<-c()#empty vector for rain days
+  for (i in 1:length(precip)){
+    if(precip[i]>threshold){ #threshold for deciding if it's raining or not
+      raindays<-1
+    }else{
+      raindays<-0
+    }
+    rainy.days<-c(rainy.days, raindays) #output vector of rain or not
+  }
+  return(rainy.days)
+}
+
+weather15$rainy<-rainy.days(weather15$rain, threshold=0)
+
+
+#so now wee need to take the weather data down to a daily resolution to do some more calculations
+
+weather.daily<-ddply(weather15, c("year", "doy"), summarize,
+                 pressure=mean(pressure),
+                 wind_speed=mean(wind_speed),
+                 sol_rad=mean(sol_rad),
+                 rain=sum(rain),
+                 min_temp=min(temperature),
+                 max_temp=max(temperature),
+                 mean_temp=mean(temperature),
+                 rh=mean(rh))
+
