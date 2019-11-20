@@ -303,3 +303,4 @@ weather.daily<-ddply(weather15, c("year", "doy"), summarize,
                  mean_temp=mean(temperature),
                  rh=mean(rh))
 
+weather.daily$rainy_day<-rainy.days(weather.daily$rain, threshold=0)
