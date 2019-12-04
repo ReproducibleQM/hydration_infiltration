@@ -303,4 +303,25 @@ weather.daily<-ddply(weather15, c("year", "doy"), summarize,
                  mean_temp=mean(temperature),
                  rh=mean(rh))
 
-weather.daily$rainy_day<-rainy.days(weather.daily$rain, threshold=0)
+weather.daily$rainy_day<-rainy.days(weather.daily$rain, threshold=2.5)#using the threshold for 'rainy day' after Bill's paper
+
+weather15<-merge(weather15, weather.daily, by=c("year", "doy"), all.x=TRUE)
+
+#change name of minute_interval column
+names(weather15)[names(weather15) == "minute_interval"] <- "minute"
+
+#let's merge our weather data into our soil moisture data
+all_data<-merge(allrips, weather15, by=c("year", "doy", "hour", "minute"), all.x=TRUE)
+
+
+#let's create a plot of change over time
+plot2<-ggplot(all_data, aes(x=new_date, y=water_content, color=sensor))+
+  facet_wrap(~incline, ncol=1)+
+  geom_line()+
+  geom_line(aes(x=new_date, y=prec.accum/200), color="blue")+
+  scale_y_continuous(sec.axis = sec_axis(~.*200, name = "Precipitation mm"))+
+  theme_bw()+
+  labs(color="Sensor location", x="Date", y="Water content")+
+  scale_color_brewer(palette="Set3")
+
+plot2
